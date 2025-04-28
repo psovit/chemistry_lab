@@ -1,7 +1,7 @@
-import ChemistryLab from './components/ChemistryLab'
+import ChemistryLab from './components/ChemistryLab';
 
 const App = () => (
-    <ChemistryLab />
+     <ChemistryLab />
 );
 
 export default App

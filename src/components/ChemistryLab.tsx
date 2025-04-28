@@ -13,7 +13,7 @@ interface AlkaliElement {
 const ALKALI_ELEMENTS: AlkaliElement[] = [
   { name: 'Lithium', symbol: 'Li', color: 'hotpink' },
   { name: 'Sodium', symbol: 'Na', color: 'red' },
-  { name: 'Potassium', symbol: 'K', color: 'green' },
+  { name: 'Potassium', symbol: 'K', color: 'silver' },
   { name: 'Rubidium', symbol: 'Rb', color: '#7d7d7d' },
   { name: 'Caesium', symbol: 'Cs', color: '#9f9f9f' },
   { name: 'Francium', symbol: 'Fr', color: '#9f9f9f' }
@@ -82,11 +82,11 @@ export default function ChemistryLab() {
       <Canvas camera={{ position: [0, 2, 5] }}>
         <ambientLight intensity={0.5} />
         <pointLight position={[10, 10, 10]} />
-        <OrbitControls />
+        <OrbitControls enableRotate={false} enableZoom={false} />
         <Beaker />
         {!isPotassiumDropped && (
           <AlkaliElement 
-            position={[2, 2, 0]} 
+            position={[0, 2.5, 0]} 
             onClick={handleDrop}
             color={selectedElement.color}
           />

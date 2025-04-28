@@ -1,5 +1,4 @@
 import { useRef } from 'react'
-import { Sphere } from '@react-three/drei'
 import { useFrame } from '@react-three/fiber'
 import { Mesh } from 'three'
 
@@ -7,32 +6,36 @@ interface AlkaliElementProps {
   position: [number, number, number]
   onClick: () => void
   color: string
+
 }
 
-export default function AlkaliElement({ position, onClick, color }: AlkaliElementProps) {
-  const elementRef = useRef<Mesh>(null)
+interface CubeProps {
+  position: [number, number, number];
+  size: [number, number, number];
+  color: string;
+  onClick: () => void;
+}
 
-  useFrame(() => {
-    if (elementRef.current) {
-      elementRef.current.rotation.y += 0.01
-    }
+const Cube = ({ position, size, color, onClick }: CubeProps) => {
+  const ref = useRef<Mesh>(null);
+
+   useFrame((state, delta) => {
+     if (ref.current) {
+       ref.current.rotation.y += delta;
+     }
   })
 
   return (
-    <group>
-      <Sphere
-        ref={elementRef}
-        args={[0.3, 32, 32]}
-        position={position}
-        onClick={onClick}
-      >
-        <meshStandardMaterial 
-          attach="material"
-          color={color}
-          metalness={0.8} 
-          roughness={0.2}
-        />
-      </Sphere>
-    </group>
+    <mesh position={position} ref={ref} onClick={onClick}>
+      <boxGeometry args={size}/>
+      <meshStandardMaterial color={color}/>
+    </mesh>
+  )
+}
+
+
+export default function AlkaliElement({ position, onClick, color }: AlkaliElementProps) {
+  return (
+    <Cube position={position} size={[0.3, 0.3, 0.3]} color={color} onClick={onClick} />
   )
 }

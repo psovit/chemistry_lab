@@ -6,7 +6,7 @@ export default function Beaker() {
   const beakerRef = useRef<Mesh>(null)
 
   return (
-    <group>
+    <group position={[0,-1,0]}>
       <Cylinder
         args={[1, 1, 2, 32]}
         position={[0, 1, 0]}
