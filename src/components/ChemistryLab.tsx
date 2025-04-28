@@ -93,12 +93,11 @@ export default function ChemistryLab() {
         <pointLight position={[10, 10, 10]} />
         <OrbitControls enableRotate={false} enableZoom={false} />
         <Beaker />
-        {!isPotassiumDropped && (
-          <AlkaliElement 
-            position={[0, 2.5, 0]} 
-            color={selectedElement.color}
-          />
-        )}
+        <AlkaliElement 
+          position={[0, 2.5, 0]} 
+          color={selectedElement.color}
+          isDropped={isPotassiumDropped}
+        />
       </Canvas>
     </div>
   )
