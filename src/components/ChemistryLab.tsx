@@ -1,7 +1,7 @@
 import { Canvas } from '@react-three/fiber'
 import { OrbitControls } from '@react-three/drei'
-import { useState } from 'react'
-import Beaker from './Beaker'
+import { useRef, useState } from 'react'
+import Beaker, { BeakerRef } from './Beaker'
 import AlkaliElement from './AlkaliElement'
 
 interface AlkaliElement {
@@ -22,6 +22,7 @@ const ALKALI_ELEMENTS: AlkaliElement[] = [
 export default function ChemistryLab() {
   const [isPotassiumDropped, setIsElementDropped] = useState(false)
   const [selectedElement, setSelectedElement] = useState<AlkaliElement>(ALKALI_ELEMENTS[2])
+  const beakerRef = useRef<BeakerRef>(null)
 
 
   const handleElementSelect = (event: React.ChangeEvent<HTMLSelectElement>): void => {
@@ -91,12 +92,13 @@ export default function ChemistryLab() {
       <Canvas camera={{ position: [0, 2, 5] }}>
         <directionalLight position={[0,0,2]} intensity={0.5}/> 
         <pointLight position={[10, 10, 10]} />
-        <OrbitControls enableRotate={false} enableZoom={false} />
-        <Beaker />
+        <OrbitControls />
+        <Beaker ref={beakerRef} />
         <AlkaliElement 
           position={[0, 2.5, 0]} 
           color={selectedElement.color}
           isDropped={isPotassiumDropped}
+          onSplash={() => beakerRef.current?.triggerRipple()}
         />
       </Canvas>
     </div>
