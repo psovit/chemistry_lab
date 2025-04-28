@@ -17,21 +17,26 @@ interface CubeProps {
 
 const Cube = ({ position, size, color, isDropped }: CubeProps) => {
   const ref = useRef<Mesh>(null)
-  const [x, y, z] = position
+  const [x, initialY, z] = position
   const targetY = 0 // Bottom of the beaker
+  const currentY = useRef(initialY)
 
   useFrame((state, delta) => {
     if (ref.current) {
       ref.current.rotation.y += delta
 
-      if (isDropped && ref.current.position.y > targetY) {
-        ref.current.position.y -= delta * 2 // Adjust speed by changing multiplier
+      if (isDropped && currentY.current > targetY) {
+        currentY.current -= delta * 2 // Drop speed
+        ref.current.position.y = currentY.current
+      } else if (!isDropped && currentY.current < initialY) {
+        currentY.current += delta * 2 // Rise speed
+        ref.current.position.y = currentY.current
       }
     }
   })
 
   return (
-    <mesh position={[x, isDropped ? y : y, z]} ref={ref}>
+    <mesh position={[x, currentY.current, z]} ref={ref}>
       <boxGeometry args={size}/>
       <meshStandardMaterial color={color}/>
     </mesh>
