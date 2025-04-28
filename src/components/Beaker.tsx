@@ -12,7 +12,7 @@ export default function Beaker() {
         position={[0, 1, 0]}
         material-transparent={true}
         material-opacity={0.2}
-        material-color="#ffffff"
+        material-color="grey"
       />
       <Cylinder
         args={[0.9, 0.9, 1.5, 32]}

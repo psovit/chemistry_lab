@@ -20,18 +20,15 @@ const ALKALI_ELEMENTS: AlkaliElement[] = [
 ]
 
 export default function ChemistryLab() {
-  const [isPotassiumDropped, setIsPotassiumDropped] = useState(false)
+  const [isPotassiumDropped, setIsElementDropped] = useState(false)
   const [selectedElement, setSelectedElement] = useState<AlkaliElement>(ALKALI_ELEMENTS[2])
 
-  const handleDrop = () => {
-    setIsPotassiumDropped(true)
-  }
 
   const handleElementSelect = (event: React.ChangeEvent<HTMLSelectElement>): void => {
     const element = ALKALI_ELEMENTS.find(el => el.name === event.target.value)
     if (element) {
       setSelectedElement(element)
-      setIsPotassiumDropped(false)
+      setIsElementDropped(false)
     }
   }
 
@@ -65,12 +62,24 @@ export default function ChemistryLab() {
           ))}
         </select>
         <button
-          onClick={() => setIsPotassiumDropped(false)}
+          onClick={() => setIsElementDropped(false)}
           style={{
             padding: '0.5rem 1rem',
             borderRadius: '4px',
             border: 'none',
-            background: '#4CAF50',
+            color: 'black',
+            cursor: 'pointer'
+          }}
+        >
+          Reset Element
+        </button>
+        <button
+          onClick={() => setIsElementDropped(true)}
+          style={{
+            padding: '0.5rem 1rem',
+            borderRadius: '4px',
+            border: 'none',
+            background: 'green',
             color: 'white',
             cursor: 'pointer'
           }}
@@ -80,14 +89,13 @@ export default function ChemistryLab() {
       </div>
 
       <Canvas camera={{ position: [0, 2, 5] }}>
-        <ambientLight intensity={0.5} />
+        <directionalLight position={[0,0,2]} intensity={0.5}/> 
         <pointLight position={[10, 10, 10]} />
         <OrbitControls enableRotate={false} enableZoom={false} />
         <Beaker />
         {!isPotassiumDropped && (
           <AlkaliElement 
             position={[0, 2.5, 0]} 
-            onClick={handleDrop}
             color={selectedElement.color}
           />
         )}

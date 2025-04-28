@@ -4,19 +4,16 @@ import { Mesh } from 'three'
 
 interface AlkaliElementProps {
   position: [number, number, number]
-  onClick: () => void
   color: string
-
 }
 
 interface CubeProps {
   position: [number, number, number];
   size: [number, number, number];
   color: string;
-  onClick: () => void;
 }
 
-const Cube = ({ position, size, color, onClick }: CubeProps) => {
+const Cube = ({ position, size, color }: CubeProps) => {
   const ref = useRef<Mesh>(null);
 
    useFrame((state, delta) => {
@@ -26,7 +23,7 @@ const Cube = ({ position, size, color, onClick }: CubeProps) => {
   })
 
   return (
-    <mesh position={position} ref={ref} onClick={onClick}>
+    <mesh position={position} ref={ref}>
       <boxGeometry args={size}/>
       <meshStandardMaterial color={color}/>
     </mesh>
@@ -34,8 +31,8 @@ const Cube = ({ position, size, color, onClick }: CubeProps) => {
 }
 
 
-export default function AlkaliElement({ position, onClick, color }: AlkaliElementProps) {
+export default function AlkaliElement({ position, color }: AlkaliElementProps) {
   return (
-    <Cube position={position} size={[0.3, 0.3, 0.3]} color={color} onClick={onClick} />
+    <Cube position={position} size={[0.3, 0.3, 0.3]} color={color} />
   )
 }
